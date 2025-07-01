@@ -27,6 +27,6 @@ class Matrix{
         int getCols()const {return cols;}
         
 
-        //Υπερφορτωση τελεστη ,<  για εκτυπωση του πινακα 
+        //Υπερφορτωση τελεστη <<  για εκτυπωση του πινακα 
         friend std::ostream& operator<<(std::ostream& os, const Matrix& matrix);
 };
