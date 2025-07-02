@@ -6,8 +6,8 @@ int main() {
     std::vector<double> rowVec = {1, 2, 3};
     std::vector<double> colVec = {4, 5};
 
-    Matrix rowMatrix(rowVec, false);   // 1x3
-    Matrix colMatrix(colVec, true); // 2x1
+    Matrix rowMatrix(rowVec, true);   // 1x3
+    Matrix colMatrix(colVec, false); // 2x1
 
     // Δημιουργία 2D πίνακα
     std::vector<std::vector<double>> mat2D = {
