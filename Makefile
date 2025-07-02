@@ -53,4 +53,8 @@ clean:
 	@echo "Cleaning up..."
 	rm -rf $(OBJ_DIR) $(LIB_DIR) $(TEST_DIR)/test_matrix $(EXAMPLE_DIR)/demo
 
+<<<<<<< HEAD
 .PHONY: all clean test demo
+=======
+.PHONY: all clean test demo
+>>>>>>> ac67552a0272319e0d9b5aa6e4824d1cee016385
