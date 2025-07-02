@@ -16,7 +16,7 @@ Matrix::Matrix(int rows,int cols){
 //Δημιουργια του 1D πινακα 
 Matrix::Matrix(const std::vector<double>&arr,bool isrows){
     //αν ειναι διανυσμα γραμμη 
-   if(!isrows){
+   if(isrows){
     rows=1;
     cols=arr.size();
     data.resize(1,std::vector<double>(cols));
