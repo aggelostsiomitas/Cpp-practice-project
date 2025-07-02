@@ -100,6 +100,16 @@ Matrix Matrix::operator*(const Matrix& other)const{
     return result;
 }
 
+Matrix Matrix::transpose()const{
+    Matrix result(cols,rows);
+    for(int i=0;i<rows;i++){
+        for(int j=0;j<cols;j++){
+            result(j,i)=data[i][j];
+        }
+    }
+    return result;
+}
+
 //Υλοποιηση υπερφορτωσης για αναγνωση στοιχειων του πινακα 
 double Matrix::operator()(int row, int col) const {
     if (row < 0 || row >= rows || col < 0 || col >= cols) {

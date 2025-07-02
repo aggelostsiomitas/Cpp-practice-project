@@ -18,6 +18,7 @@ class Matrix{
         Matrix operator+(const Matrix& other) const;  //για το αθροισμα πινακων 
         Matrix operator-(const Matrix& other) const; //για την αφαιρεση πινακων 
         Matrix operator*(const Matrix& other) const; // για το γινομενο πινακων 
+        Matrix transpose()const;
         double operator()(int row, int col) const;
         double& operator()(int row, int col);
 
@@ -27,6 +28,6 @@ class Matrix{
         int getCols()const {return cols;}
         
 
-        //Υπερφορτωση τελεστη ,<  για εκτυπωση του πινακα 
+        //Υπερφορτωση τελεστη <<  για εκτυπωση του πινακα 
         friend std::ostream& operator<<(std::ostream& os, const Matrix& matrix);
 };

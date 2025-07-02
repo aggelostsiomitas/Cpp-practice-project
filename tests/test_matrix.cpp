@@ -28,10 +28,20 @@ void test_multiplication() {
     assert(C(1, 1) == 8);  // 3×0 + 4×2
 }
 
+void test_transpose(){
+    Matrix A({{1,2},{3,4}});
+    Matrix B=A.transpose();
+    assert(B.getRows()==2 && B.getCols()==2);
+    assert(B(0,0)==1);
+    assert(B(0,1)==3);
+    assert(B(1,0)==2);
+    assert(B(1,1)==4);
+}
 int main() {
     test_addition();
     test_subtraction();
     test_multiplication();
+    test_transpose();
     std::cout << "All tests passed " << std::endl;
     return 0;
 }

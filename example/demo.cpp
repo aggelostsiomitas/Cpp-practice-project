@@ -37,5 +37,10 @@ int main() {
     std::cout << "\nM1 - M2:\n" << difference;
     std::cout << "\nM1 * M2:\n" << multiply;
 
+    std::cout<<"testing transpose"<<std::endl;
+    Matrix transposeM1=M1.transpose();
+    std::cout<<"original matrix was:"<<M1;
+    std::cout<<'\n'<<"new matrix is:"<<transposeM1<<std::endl;
+    
     return 0;
 }
