@@ -54,3 +54,4 @@ clean:
 	rm -rf $(OBJ_DIR) $(LIB_DIR) $(TEST_DIR)/test_matrix $(EXAMPLE_DIR)/demo
 
 .PHONY: all clean test demo
+
