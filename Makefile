@@ -4,7 +4,6 @@ CXXFLAGS = -Iinc -Wall -Wextra -std=c++17   -fPIC #Wall and Wextra are for warni
 #to point that i use the c++17
 
 #directories of project
-# Project directories
 SRC_DIR = src
 OBJ_DIR = obj
 LIB_DIR = lib
