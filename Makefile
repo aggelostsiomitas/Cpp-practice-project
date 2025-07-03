@@ -30,7 +30,10 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 $(LIB): $(OBJS)
 	@mkdir -p $(LIB_DIR)
 	@echo "Creating static library $@ ..."
-	ar rcs $@ $^
+	ar rcs $@ $^   
+  # ar creates static libraries rcs:r for replacing/inserting files ,c for creating archive if it does not exist 
+  # and s for writing the object, $@ for the target file $^ for all dependencies
+
 
 # Shared library
 $(LIB_SHARED): $(OBJS)
