@@ -18,7 +18,6 @@ class Matrix{
         Matrix operator+(const Matrix& other) const;  //για το αθροισμα πινακων 
         Matrix operator-(const Matrix& other) const; //για την αφαιρεση πινακων 
         Matrix operator*(const Matrix& other) const; // για το γινομενο πινακων 
-        Matrix transpose()const;
         double operator()(int row, int col) const;
         double& operator()(int row, int col);
 

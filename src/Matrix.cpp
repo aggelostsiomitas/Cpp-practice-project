@@ -16,7 +16,7 @@ Matrix::Matrix(int rows,int cols){
 //Δημιουργια του 1D πινακα 
 Matrix::Matrix(const std::vector<double>&arr,bool isrows){
     //αν ειναι διανυσμα γραμμη 
-   if(!isrows){
+   if(isrows){
     rows=1;
     cols=arr.size();
     data.resize(1,std::vector<double>(cols));
@@ -100,15 +100,6 @@ Matrix Matrix::operator*(const Matrix& other)const{
     return result;
 }
 
-Matrix Matrix::transpose()const{
-    Matrix result(cols,rows);
-    for(int i=0;i<rows;i++){
-        for(int j=0;j<cols;j++){
-            result(j,i)=data[i][j];
-        }
-    }
-    return result;
-}
 
 //Υλοποιηση υπερφορτωσης για αναγνωση στοιχειων του πινακα 
 double Matrix::operator()(int row, int col) const {
