@@ -33,10 +33,10 @@ void test_inplace_addition(){
     Matrix A({{1, 2}, {3, 4}});
     Matrix B({{2, 0}, {1, 2}});
     A+=B;
-    assert(A(0,0)==6);
+    assert(A(0,0)==3);
     assert(A(0,1)==2);
     assert(A(1,0)==4);
-    assert(A(1,1)==12);
+    assert(A(1,1)==6);
 }
 
 void test_inplace_substraction(){
