@@ -55,14 +55,14 @@ Matrix::Matrix(const std::vector<std::vector<double>>&arr){
 
 // Υλοποιηση της προσθεσης πινακων 
 Matrix Matrix::operator+(const Matrix& other)const{
-  std::cout<<"Operator + called with second matrix reference\n";
+  std::cout<<"\nOperator + called with second matrix reference\n";
   Matrix result(*this); 
   result+=other; 
   return result;
 }
 
 Matrix Matrix::operator+(Matrix&&other)const{
-    std::cout<<"operator + called with temporary matrix reference\n";
+    std::cout<<"\noperator + called with temporary matrix reference\n";
     other+=*this;
     return std::move(other);
 }
@@ -73,14 +73,14 @@ Matrix Matrix::operator-(const Matrix& other)const{
     if(rows!=other.rows ||cols!=other.cols){
         throw std::invalid_argument("the dimensions of the matrixes must be the same");
     }
-std::cout<<"operator - called with second marix reference\n";
+std::cout<<"\noperator - called with second marix reference\n";
  Matrix result(*this);
  result-=other;
  return result;
 } 
 
 Matrix Matrix::operator-(Matrix&&other)const{
-    std::cout<<"operator - called with temporary matrix reference\n";
+    std::cout<<"\noperator - called with temporary matrix reference\n";
     for (int i = 0; i < rows; ++i)
         for (int j = 0; j < cols; ++j)
             other(i, j) = (*this)(i, j) - other(i, j);
@@ -90,7 +90,7 @@ Matrix Matrix::operator-(Matrix&&other)const{
 
 //Υλοποιηση του γινομενου πινακων 
 Matrix Matrix::operator*(const Matrix& other)const{
-    std::cout<<"operator * called\n";
+    std::cout<<"\noperator * called\n";
     if(cols!=other.rows)
     {
         throw std::invalid_argument("The columns of the first Matrix  must be the same with the rows of the second Matrix ");
@@ -110,7 +110,7 @@ Matrix Matrix::operator*(const Matrix& other)const{
 }
 
 Matrix& Matrix::operator+=(const Matrix&other){
-    std::cout<<"operator +=called\n";
+    std::cout<<"\noperator +=called\n";
     if(rows!=other.rows ||cols!=other.cols){
         throw std::invalid_argument("dimensions must agreee");
     }
@@ -123,7 +123,7 @@ Matrix& Matrix::operator+=(const Matrix&other){
 }
 
 Matrix& Matrix::operator-=(const Matrix&other){
-    std::cout<<"operator -= called\n";
+    std::cout<<"\noperator -= called\n";
     if(rows!=other.rows ||cols!=other.cols){
         throw std::invalid_argument("dimensions must agreee");
     }
@@ -137,7 +137,7 @@ Matrix& Matrix::operator-=(const Matrix&other){
 
 //Υλοποιηση υπερφορτωσης για αναγνωση στοιχειων του πινακα 
 double Matrix::operator()(int row, int col) const {
-    std::cout<<"accessing an element\n";
+    std::cout<<"\naccessing an element\n";
     if (row < 0 || row >= rows || col < 0 || col >= cols) {
         throw std::out_of_range("Matrix subscript out of bounds");
     }
@@ -146,7 +146,7 @@ double Matrix::operator()(int row, int col) const {
 
 //Υλοποιηση υπερφορτωσης για προσβαση σε  στοιχεια του πινακα 
 double& Matrix::operator()(int row, int col) {
-    std::cout<<"changing an element of the matrix\n";
+    std::cout<<"\nchanging an element of the matrix\n";
     if (row < 0 || row >= rows || col < 0 || col >= cols) {
         throw std::out_of_range("Matrix subscript out of bounds");
     }
