@@ -55,7 +55,7 @@ Matrix::Matrix(const std::vector<std::vector<double>>&arr){
 
 // Υλοποιηση της προσθεσης πινακων 
 Matrix Matrix::operator+(const Matrix& other)const{
-  std::cout<<"\nOperator + called with second mar=trix reference\n";
+  std::cout<<"\nOperator + called with second matrix reference\n";
   Matrix result(*this); 
   result+=other; 
   return result;
