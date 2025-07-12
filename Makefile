@@ -38,7 +38,7 @@ $(LIB): $(OBJS)
 $(LIB_SHARED): $(OBJS)
 	@mkdir -p $(LIB_DIR)
 	@echo "Creating shared library $@ ..."
-	$(CXX) -shared -o $@ $^
+	$(CXX) -shared -o $@ $^ 
 
 # Build test executable
 test: $(TEST_DIR)/test_matrix.cpp $(LIB)

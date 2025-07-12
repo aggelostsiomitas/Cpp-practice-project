@@ -37,6 +37,27 @@ int main() {
     std::cout << "\nM1 - M2:\n" << difference;
     std::cout << "\nM1 * M2:\n" << multiply;
 
+    M1+=M2;
+    std::cout<<"\nM1+=M2:\n"<<M1;
+
+    M1-=M2;
+    std::cout<<"\nM1-=M2\n"<<M2;
    
+
+
+    Matrix A( { {1,2},{3,4}});
+    Matrix B({ {5,6},{7,8}});
+    Matrix sum=A+B;
+
+    std::cout<<"A:\n"<<A;
+    std::cout<<"B:\n"<<B;
+    std::cout<<"A+B\n"<<sum;
+
+    Matrix movedmatrix=A+Matrix({ {9,8},{7,6}});
+    std::cout<<"\nA + other matrix:\n"<<movedmatrix;
+
+    Matrix C=std::move(movedmatrix);
+    std::cout<<"\nC after move:\n"<<C;
+    
     return 0;
 }

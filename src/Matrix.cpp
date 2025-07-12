@@ -1,15 +1,11 @@
 #include "../inc/Matrix.hpp"
 
 //Δημιουργια πινακα
-Matrix::Matrix(int rows,int cols){
+Matrix::Matrix(int rows,int cols):rows(rows),cols(cols),data(rows*cols,0.0){
     //έλεγχος για ακυρη εισοδος rows,cols
     if(rows<=0 ||cols<=0){
         throw std::invalid_argument("Invalid input for matrix");
     }
-    this->rows=rows;
-    this->cols=cols;
-     //φτιαχνω εναν κενο πινακα με μηδενικα στην αρχη 
-     data.resize(rows,std::vector<double>(cols,0.0));
 }
 
 
@@ -19,18 +15,17 @@ Matrix::Matrix(const std::vector<double>&arr,bool isrows){
    if(isrows){
     rows=1;
     cols=arr.size();
-    data.resize(1,std::vector<double>(cols));
-    for(int i=0;i<cols;i++){
-        data[0][i]=arr[i];
-        }
    }
    //αλλιως θα ειναι διανυσμα στηλη 
    else{
     rows=arr.size();
     cols=1;
-    data.resize(rows,std::vector<double>(1));
-    for(int i=0;i<rows;i++){
-        data[i][0]=arr[i];
+   }
+   data.resize(rows*cols);
+
+   for(int i=0;i<rows;i++){
+    for(int j=0;j<cols;j++){
+     data[index(i, j)] = arr[isrows ? j : i];
     }
    }
 }
@@ -42,9 +37,17 @@ Matrix::Matrix(const std::vector<std::vector<double>>&arr){
     rows=arr.size();
     //αριθμος στυλων 
     cols=arr[0].size();
-    data=arr;
     if(rows==0 ||cols==0){
         throw std::invalid_argument("Empty matrix");
+    }
+    data.resize(rows*cols);
+    for(int i=0;i<rows;i++){
+        if(arr[i].size()!=cols){
+          throw std::invalid_argument("Inconsistent column sizes in data.");
+        }
+        for (int j = 0; j < cols; ++j) {
+            data[index(i, j)] = arr[i][j];
+        }
     }
 }
 
@@ -52,79 +55,130 @@ Matrix::Matrix(const std::vector<std::vector<double>>&arr){
 
 // Υλοποιηση της προσθεσης πινακων 
 Matrix Matrix::operator+(const Matrix& other)const{
-    //ελεγχος διαστασεων 
-    if(rows!=other.rows ||cols!=other.cols){
-        throw std::invalid_argument("Matrix dimensions must agree");
-    }
-    Matrix result(rows,cols);
-    for(int i=0;i<rows;i++){
-        for(int j=0;j<cols;j++){
-            result.data[i][j]=data[i][j]+other.data[i][j];
-        }
-    }
-    return result;
+  std::cout<<"Operator + called with second mar=trix reference\n";
+  Matrix result(*this); 
+  result+=other; 
+  return result;
+}
+
+Matrix Matrix::operator+(Matrix&&other)const{
+    std::cout<<"operator + called with temporary matrix reference\n";
+    other+=*this;
+    return std::move(other);
 }
 
 
 // Υλοποιηση της αφαιρεσης πινακων 
 Matrix Matrix::operator-(const Matrix& other)const{
-    //ελεγχος διαστασεων 
-     if(rows!=other.rows ||cols!=other.cols){
-        throw std::invalid_argument("Matrix dimensions must agree");
+    if(rows!=other.rows ||cols!=other.cols){
+        throw std::invalid_argument("the dimensions of the matrixes must be the same");
     }
-    Matrix result(rows,cols);
-    for(int i=0;i<rows;i++){
-        for(int j=0;j<cols;j++){
-            result.data[i][j]=data[i][j]-other.data[i][j];
-        }
-    }
-    return result;
+std::cout<<"operator - called with second marix reference\n";
+ Matrix result(*this);
+ result-=other;
+ return result;
 } 
+
+Matrix Matrix::operator-(Matrix&&other)const{
+    std::cout<<"operator - called with temporary matrix reference\n";
+    for (int i = 0; i < rows; ++i)
+        for (int j = 0; j < cols; ++j)
+            other(i, j) = (*this)(i, j) - other(i, j);
+    return std::move(other);
+}
+
 
 //Υλοποιηση του γινομενου πινακων 
 Matrix Matrix::operator*(const Matrix& other)const{
-    //λεγχος γραμμων και στυλων, οι στυλες του πρωτου πρεπει να ειναι ιδιες με τις γραμμες του δυτερου
+    std::cout<<"operator * called\n";
     if(cols!=other.rows)
     {
         throw std::invalid_argument("The columns of the first Matrix  must be the same with the rows of the second Matrix ");
     } 
-    Matrix result(rows,cols);
+    Matrix result(rows,other.cols);
     for(int i=0;i<rows;i++)
     {
         for(int j=0;j<other.cols;j++){
+            double sum = 0.0;
             for(int k=0;k<cols;k++){
-                result.data[i][j]+=data[i][k]*other.data[k][j];
-            }
+        sum+=data[index(i,k)]*other.data[other.index(k,j)];          
+      }
+      result.data[result.index(i,j)]=sum;
         }
     }
     return result;
 }
 
+Matrix& Matrix::operator+=(const Matrix&other){
+    std::cout<<"operator +=called\n";
+    if(rows!=other.rows ||cols!=other.cols){
+        throw std::invalid_argument("dimensions must agreee");
+    }
+    for(int i=0;i<rows;i++){
+        for(int j=0;j<cols;j++){
+            data[index(i,j)]+=other.data[index(i,j)];
+        }
+    }
+    return *this;
+}
+
+Matrix& Matrix::operator-=(const Matrix&other){
+    std::cout<<"operator -= called\n";
+    if(rows!=other.rows ||cols!=other.cols){
+        throw std::invalid_argument("dimensions must agreee");
+    }
+    for(int i=0;i<rows;i++){
+        for(int j=0;j<cols;j++){
+            data[index(i,j)]-=other.data[index(i,j)];
+        }
+    }
+    return *this;
+}
 
 //Υλοποιηση υπερφορτωσης για αναγνωση στοιχειων του πινακα 
 double Matrix::operator()(int row, int col) const {
+    std::cout<<"accessing an element\n";
     if (row < 0 || row >= rows || col < 0 || col >= cols) {
         throw std::out_of_range("Matrix subscript out of bounds");
     }
-    return data[row][col];
+    return data[index(row, col)];  
 }
 
 //Υλοποιηση υπερφορτωσης για προσβαση σε  στοιχεια του πινακα 
 double& Matrix::operator()(int row, int col) {
+    std::cout<<"changing an element of the matrix\n";
     if (row < 0 || row >= rows || col < 0 || col >= cols) {
         throw std::out_of_range("Matrix subscript out of bounds");
     }
-    return data[row][col];
+    return data[index(row, col)]; 
 }
 
 
 //Υλοποιηση της εκτυπωσης του πινακα 
 std::ostream& operator<<(std::ostream&os , const Matrix& matrix){
+    std::cout<<"printinh the matrix\n";
     for (int i = 0; i < matrix.rows; i++) {
         for (int j = 0; j < matrix.cols; j++) {
-            os << matrix.data[i][j] << " ";
+            os << matrix.data[matrix.index(i,j)] << " ";
         }
         os << std::endl;
     }
     return os;
+}
+
+
+Matrix::Matrix(Matrix&&other) noexcept:rows(other.rows),cols(other.cols),data(std::move(other.data)){
+    other.rows=0;
+    other.cols=0;
+}
+
+Matrix& Matrix::operator=(Matrix&&other)noexcept{
+    if (this != &other) {
+        rows = other.rows;
+        cols = other.cols;
+        data = std::move(other.data);
+        other.rows = 0;
+        other.cols = 0;
+    }
+    return *this;
 }
