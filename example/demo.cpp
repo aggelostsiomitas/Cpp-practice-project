@@ -47,11 +47,11 @@ int main() {
 
     Matrix A( { {1,2},{3,4}});
     Matrix B({ {5,6},{7,8}});
-    Matrix sum=A+B;
+    Matrix sum2=A+B;
 
     std::cout<<"A:\n"<<A;
     std::cout<<"B:\n"<<B;
-    std::cout<<"A+B\n"<<sum;
+    std::cout<<"A+B\n"<<sum2;
 
     Matrix movedmatrix=A+Matrix({ {9,8},{7,6}});
     std::cout<<"\nA + other matrix:\n"<<movedmatrix;
