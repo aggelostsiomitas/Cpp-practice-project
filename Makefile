@@ -53,6 +53,6 @@ demo: $(EXAMPLE_DIR)/demo.cpp $(LIB)
 # Clean up
 clean:
 	@echo "Cleaning up..."
-	rm -rf $(OBJ_DIR) $(LIB_DIR) $(TEST_DIR)/test_matrix $(EXAMPLE_DIR)/demo
+	rm -rf $(OBJ_DIR)/Matrix.o $(LIB_DIR)/Libmatrix.a $(LIB_DIR)/Libmatrix.so   $(TEST_DIR)/test_matrix $(EXAMPLE_DIR)/demo
 
 .PHONY: all clean test demo
