@@ -41,10 +41,7 @@ Matrix::Matrix(const std::vector<std::vector<double>>&arr){
         throw std::invalid_argument("Empty matrix");
     }
     data.resize(rows*cols);
-    for(int i=0;i<rows;i++){
-        if(arr[i].size()!=cols){
-          throw std::invalid_argument("Inconsistent column sizes in data.");
-        }
+    for(int i=0;i<rows;i++){   
         for (int j = 0; j < cols; ++j) {
             data[index(i, j)] = arr[i][j];
         }
