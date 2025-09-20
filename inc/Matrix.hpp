@@ -1,48 +1,53 @@
-#pragma once 
-#include<vector>
-#include<iostream>
-#include<stdexcept>
+#ifndef MATRIX_HPP
+#define MATRIX_HPP
+#include <iostream>
+#include <stdexcept>
 
-class Matrix{
-    private:
-    //Οι μεταβλητες μου 
-        int rows,cols;
-        std::vector<double>data;
-        int index(int row, int col) const { return row * cols + col; } //function for faster matrix index access
+class Matrix {
+private:
+    int rows, cols;
+    double* data; // raw pointer for storing matrix data
 
-    public:
-        // οι constructors μου 
-        Matrix(int rows,int cols); 
-        Matrix(const std::vector<double>&arr,bool isrows); //1D 
-        Matrix(const std::vector<std::vector<double>>&arr); //2D
+    int index(int row, int col) const { 
+        return row * cols + col; 
+    }
 
-        // Οι υπερφορτωσεις που θα χρειαστω 
-        Matrix operator+(const Matrix& other) const;  //για το αθροισμα πινακων 
-        Matrix operator-(const Matrix& other) const; //για την αφαιρεση πινακων 
-        Matrix operator*(const Matrix& other) const; // για το γινομενο πινακων 
+public:
+    // --- Constructors ---
+    Matrix(int rows, int cols); 
+    Matrix(const double* arr, int size, bool isRows);   // from 1D array
+    Matrix(double** arr, int r, int c);                 // from 2D array
 
-        Matrix& operator+=(const Matrix&other);
-        Matrix& operator-=(const Matrix&other);
+    // --- Destructor ---
+    ~Matrix();
 
+    // --- Copy constructor & assignment ---
+    Matrix(const Matrix& other);
+    Matrix& operator=(const Matrix& other);
 
-        //copy constructor
-        Matrix(Matrix&& other) noexcept;
-        Matrix& operator=(Matrix&& other) noexcept;        
-        Matrix(const Matrix& other) = default;
-        Matrix&operator=(const Matrix&other)=default;
-        Matrix operator+(Matrix&& other) const;
-        Matrix operator-(Matrix&& other) const;
+    // --- Move constructor & assignment ---
+    Matrix(Matrix&& other) noexcept;
+    Matrix& operator=(Matrix&& other) noexcept;
 
+    // --- Operators ---
+    Matrix operator+(const Matrix& other) const;
+    Matrix operator-(const Matrix& other) const;
+    Matrix operator*(const Matrix& other) const;
 
-        double operator()(int row, int col) const;
-        double& operator()(int row, int col);
+    Matrix& operator+=(const Matrix& other);
+    Matrix& operator-=(const Matrix& other);
 
+    Matrix operator+(Matrix&& other) const;
+    Matrix operator-(Matrix&& other) const;
 
-        //βοηθητικες συναρτησεις για εκτυπωση , και για τις γραμμες και τις στυλες 
-        int getRows()const{return rows;}
-        int getCols()const {return cols;}
-        
+    double operator()(int row, int col) const;
+    double& operator()(int row, int col);
 
-        //Υπερφορτωση τελεστη <<  για εκτυπωση του πινακα 
-        friend std::ostream& operator<<(std::ostream& os, const Matrix& matrix);
+    // --- Getters ---
+    int getRows() const { return rows; }
+    int getCols() const { return cols; }
+
+    // --- Friend for printing ---
+    friend std::ostream& operator<<(std::ostream& os, const Matrix& matrix);
 };
+#endif
